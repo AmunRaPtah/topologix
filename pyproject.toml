@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "topologix"
+version = "0.0.1"
+description = "TDA-based drug-protein interaction screening"
+requires-python = ">=3.11"
+dependencies = [
+    "numpy>=1.26",
+    "scipy>=1.11",
+    "ripser>=0.6.4",
+    "persim>=0.3.2",
+    "gudhi>=3.9",
+    "rdkit>=2024.3.1",
+    "biopython>=1.83",
+    "scikit-learn>=1.4",
+    "xgboost>=2.0",
+    "pandas>=2.2",
+    "requests>=2.31",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0", "pytest-cov>=5.0", "ruff>=0.5"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
