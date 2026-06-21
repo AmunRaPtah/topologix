@@ -9,5 +9,7 @@ htmlcov/
 venv/
 benchmarks/data/*.csv
 benchmarks/data/*.sdf
+benchmarks/data/*.zip
+benchmarks/data/admet_group/
 !benchmarks/data/.gitkeep
 .env
