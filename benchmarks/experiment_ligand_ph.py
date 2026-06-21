@@ -27,7 +27,7 @@ from pathlib import Path
 
 import numpy as np
 
-from topologix.data import load_herg_tdc
+from topologix.data import load_herg_tdc, load_herg_karim
 from topologix.metrics import classification_metrics
 from benchmarks.baseline import featurize as descriptor_featurize, train_xgb
 from benchmarks.harness import run_gate
@@ -53,10 +53,14 @@ def _featurize_aligned(smiles, y, b_featurizer, maxdim=1):
     return Xa, Xb, y[keep], keep
 
 
-def run(variant: str = "vanilla", seed: int = 0, maxdim: int = 1) -> dict:
-    b_featurizer, tag = B_VARIANTS[variant]
-    split = load_herg_tdc()
-    print(f"loaded ({variant}):", split)
+DATASETS = {"tdc": load_herg_tdc, "karim": load_herg_karim}
+
+
+def run(variant: str = "vanilla", dataset: str = "tdc", seed: int = 0, maxdim: int = 1) -> dict:
+    b_featurizer, base_tag = B_VARIANTS[variant]
+    tag = base_tag if dataset == "tdc" else f"{base_tag}_{dataset}"
+    split = DATASETS[dataset]()
+    print(f"loaded ({variant} / {dataset}):", split)
 
     Xa_tr, Xb_tr, ytr, ktr = _featurize_aligned(split.train_smiles, split.train_y, b_featurizer, maxdim)
     Xa_te, Xb_te, yte, kte = _featurize_aligned(split.test_smiles, split.test_y, b_featurizer, maxdim)
@@ -103,6 +107,7 @@ def run(variant: str = "vanilla", seed: int = 0, maxdim: int = 1) -> dict:
         "verdict_any_pass": any(g["passes"] for g in gates.values()),
     }
     result["variant"] = variant
+    result["dataset"] = dataset
     OUT.mkdir(parents=True, exist_ok=True)
     path = OUT / f"{tag}.json"
     path.write_text(json.dumps(result, indent=2))
@@ -113,4 +118,6 @@ def run(variant: str = "vanilla", seed: int = 0, maxdim: int = 1) -> dict:
 
 if __name__ == "__main__":
     import sys
-    run(sys.argv[1] if len(sys.argv) > 1 else "vanilla")
+    variant = sys.argv[1] if len(sys.argv) > 1 else "vanilla"
+    dataset = sys.argv[2] if len(sys.argv) > 2 else "tdc"
+    run(variant, dataset)

@@ -43,6 +43,28 @@ def load_herg_tdc(seed: int = 1) -> Split:
     )
 
 
+def load_herg_karim(seed: int = 1) -> Split:
+    """TDC hERG_Karim (Karim et al. 2021): ~13.4k compounds, binary blockade.
+
+    The powered companion to the 648-compound admet_group set: a scaffold split with
+    ~2.7k test compounds shrinks the gate's bootstrap CI from ~±0.06 to ~±0.013 AUROC,
+    enough to resolve the small ligand-topology edge the small set could not. train+valid
+    are merged into train_val to mirror the admet_group convention. Roughly class-balanced
+    (~49% positive), so AUROC and MCC are both well-estimated.
+    """
+    from tdc.single_pred import Tox
+    CACHE.mkdir(parents=True, exist_ok=True)
+    data = Tox(name="hERG_Karim", path=str(CACHE))
+    sp = data.get_split(method="scaffold", seed=seed, frac=[0.7, 0.1, 0.2])
+    import pandas as pd
+    train_val = pd.concat([sp["train"], sp["valid"]], ignore_index=True)
+    test = sp["test"]
+    return Split(
+        train_smiles=train_val["Drug"].tolist(), train_y=train_val["Y"].astype(int).tolist(),
+        test_smiles=test["Drug"].tolist(), test_y=test["Y"].astype(int).tolist(),
+    )
+
+
 def load_smiles_csv(path: str, smiles_col: str = "smiles", label_col: str = "y",
                     test_frac: float = 0.2, seed: int = 0) -> Split:
     """Generic loader for an HTS-scale CSV (e.g. Karim/Sato) with a stratified holdout.
