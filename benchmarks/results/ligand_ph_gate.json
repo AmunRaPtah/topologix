@@ -1,0 +1,74 @@
+{
+  "split": "TDC admet_group hERG scaffold",
+  "n_train": 518,
+  "n_test": 132,
+  "n_test_pos": 97,
+  "maxdim": 1,
+  "seed": 0,
+  "feature_dims": {
+    "A": 217,
+    "B": 88
+  },
+  "metrics": {
+    "A_descriptor": {
+      "auroc": 0.8366715758468336,
+      "auprc": 0.9239427070216228,
+      "mcc": 0.5752135755885521,
+      "bacc": 0.7730486008836523,
+      "acc": 0.8409090909090909
+    },
+    "B_ligandPH": {
+      "auroc": 0.7123711340206186,
+      "auprc": 0.8604523944985186,
+      "mcc": 0.26126656848306334,
+      "bacc": 0.6306332842415316,
+      "acc": 0.7121212121212122
+    },
+    "AB_concat": {
+      "auroc": 0.8356406480117821,
+      "auprc": 0.9255019040485788,
+      "mcc": 0.5602965762109354,
+      "bacc": 0.7365243004418263,
+      "acc": 0.8409090909090909
+    }
+  },
+  "gates": {
+    "B_ligandPH_vs_A::auroc": {
+      "passes": false,
+      "delta": -0.12430044182621502,
+      "ci_lo": -0.21671179703503085,
+      "ci_hi": -0.029152875041032963,
+      "baseline": 0.8366715758468336,
+      "method": 0.7123711340206186,
+      "p_method_gt_baseline": 0.0025
+    },
+    "AB_concat_vs_A::auroc": {
+      "passes": false,
+      "delta": -0.0010309278350515427,
+      "ci_lo": -0.029304642841855036,
+      "ci_hi": 0.025218044936362923,
+      "baseline": 0.8366715758468336,
+      "method": 0.8356406480117821,
+      "p_method_gt_baseline": 0.4815
+    },
+    "B_ligandPH_vs_A::mcc": {
+      "passes": false,
+      "delta": -0.3139470071054888,
+      "ci_lo": -0.5254320220010067,
+      "ci_hi": -0.10760291119494364,
+      "baseline": 0.5752135755885521,
+      "method": 0.26126656848306334,
+      "p_method_gt_baseline": 0.001
+    },
+    "AB_concat_vs_A::mcc": {
+      "passes": false,
+      "delta": -0.014916999377616702,
+      "ci_lo": -0.14991700142336556,
+      "ci_hi": 0.10665546744919542,
+      "baseline": 0.5752135755885521,
+      "method": 0.5602965762109354,
+      "p_method_gt_baseline": 0.3885
+    }
+  },
+  "verdict_any_pass": false
+}

@@ -57,13 +57,21 @@ where it is real (interface restriction + toxicity application + IPC vectorizati
       rotation/translation, stability sanity (small perturbation → small feature change).
 Exit: each construct has a constraint set that passes + a docstring citing its prior art.
 
-## Phase 2 — Prototype (thin vertical slice FIRST)  [Engineering + Derivation]
+## Phase 2 — Prototype (thin vertical slice FIRST)  [Engineering + Derivation]  ◑ B DONE 2026-06-21
 Goal: smallest end-to-end pipeline that produces features for real hERG compounds — built to
 enable the honest **three-way comparison**, because hERG may be ligand-only predictable.
+- [x] Track B shipped: `homology` (VR PH + fixed-length vectorize) + `features.ligand_ph_features`
+      (SMILES→ETKDGv3 conformer→heavy-atom cloud→PH vector, 88 dims). Constraint set passes
+      (`tests/test_homology.py`: fixed length, exact rotation/translation invariance, perturbation
+      stability, degenerate/invalid handling).
+- [x] **Gate run on B early (the cheap kill experiment)** — `benchmarks/experiment_ligand_ph.py`.
+      Result signed in `docs/gate-result-ligand-ph.md`: **NO PULSE**. B alone AUROC 0.71/MCC 0.26
+      (≪ A's 0.84/0.58); A⊕B ≈ A within noise (both CIs straddle 0). Vanilla ligand-only PH adds
+      no orthogonal hERG signal. Track C (interface PH) still untested.
 - [ ] Three feature tracks on the same TDC split:
-      (A) descriptor baseline (Phase 0),
-      (B) **ligand-only PH** (PH on the drug atom cloud — no protein),
-      (C) **interface bipartite PH** (the full opposition-distance/interface construct).
+      (A) descriptor baseline (Phase 0) ✓,
+      (B) **ligand-only PH** (PH on the drug atom cloud — no protein) ✓ — FAILED gate,
+      (C) **interface bipartite PH** (the full opposition-distance/interface construct) — pending decision.
 - [ ] Structure track needs hERG pocket coordinates: cryo-EM **5VA1/7CN1** + ligand poses
       (dock with the Merck-project Vina path or use a fixed reference pose). Keep the point cloud
       interface-restricted (hundreds of atoms) to stay in the 22 ms regime.
