@@ -1,0 +1,75 @@
+{
+  "split": "TDC admet_group hERG scaffold",
+  "n_train": 518,
+  "n_test": 132,
+  "n_test_pos": 97,
+  "maxdim": 1,
+  "seed": 0,
+  "feature_dims": {
+    "A": 217,
+    "B": 616
+  },
+  "metrics": {
+    "A_descriptor": {
+      "auroc": 0.8366715758468336,
+      "auprc": 0.9239427070216228,
+      "mcc": 0.5752135755885521,
+      "bacc": 0.7730486008836523,
+      "acc": 0.8409090909090909
+    },
+    "B_ligandPH": {
+      "auroc": 0.8522827687776141,
+      "auprc": 0.9398807676090637,
+      "mcc": 0.46819302943653507,
+      "bacc": 0.6976435935198821,
+      "acc": 0.8106060606060606
+    },
+    "AB_concat": {
+      "auroc": 0.8458026509572901,
+      "auprc": 0.9318178396904009,
+      "mcc": 0.5224169737219673,
+      "bacc": 0.7353460972017674,
+      "acc": 0.8257575757575758
+    }
+  },
+  "gates": {
+    "B_ligandPH_vs_A::auroc": {
+      "passes": false,
+      "delta": 0.015611192930780504,
+      "ci_lo": -0.0411202814459117,
+      "ci_hi": 0.07234774681800923,
+      "baseline": 0.8366715758468336,
+      "method": 0.8522827687776141,
+      "p_method_gt_baseline": 0.7125
+    },
+    "AB_concat_vs_A::auroc": {
+      "passes": false,
+      "delta": 0.009131075110456521,
+      "ci_lo": -0.01782124447717236,
+      "ci_hi": 0.03465483852794944,
+      "baseline": 0.8366715758468336,
+      "method": 0.8458026509572901,
+      "p_method_gt_baseline": 0.7585
+    },
+    "B_ligandPH_vs_A::mcc": {
+      "passes": false,
+      "delta": -0.10702054615201706,
+      "ci_lo": -0.2552405834920299,
+      "ci_hi": 0.03731478073467402,
+      "baseline": 0.5752135755885521,
+      "method": 0.46819302943653507,
+      "p_method_gt_baseline": 0.07
+    },
+    "AB_concat_vs_A::mcc": {
+      "passes": false,
+      "delta": -0.05279660186658486,
+      "ci_lo": -0.15995782832306987,
+      "ci_hi": 0.037309972337079764,
+      "baseline": 0.5752135755885521,
+      "method": 0.5224169737219673,
+      "p_method_gt_baseline": 0.124
+    }
+  },
+  "verdict_any_pass": false,
+  "variant": "esph"
+}

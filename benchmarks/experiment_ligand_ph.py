@@ -31,28 +31,35 @@ from topologix.data import load_herg_tdc
 from topologix.metrics import classification_metrics
 from benchmarks.baseline import featurize as descriptor_featurize, train_xgb
 from benchmarks.harness import run_gate
-from topologix.features import ligand_ph_features
+from topologix.features import ligand_ph_features, element_ph_features
 
 OUT = Path(__file__).resolve().parent / "results"
 
+# Track-B variant registry: name -> (featurizer, output-tag)
+B_VARIANTS = {
+    "vanilla": (ligand_ph_features, "ligand_ph_gate"),   # all-atom ligand PH
+    "esph": (element_ph_features, "esph_gate"),           # element-specific channels
+}
 
-def _featurize_aligned(smiles, y, maxdim=1):
+
+def _featurize_aligned(smiles, y, b_featurizer, maxdim=1):
     """Return (Xa, Xb, y) over the intersection of descriptor-valid and PH-valid rows."""
     y = np.asarray(y).astype(int)
     Xa_v, mA = descriptor_featurize(smiles)
-    Xb_v, mB = ligand_ph_features(smiles, maxdim=maxdim)
+    Xb_v, mB = b_featurizer(smiles, maxdim=maxdim)
     keep = mA & mB
     Xa = Xa_v[keep[mA]]            # rows of the A-valid block that are also B-valid
     Xb = Xb_v[keep[mB]]           # rows of the B-valid block that are also A-valid
     return Xa, Xb, y[keep], keep
 
 
-def run(seed: int = 0, maxdim: int = 1) -> dict:
+def run(variant: str = "vanilla", seed: int = 0, maxdim: int = 1) -> dict:
+    b_featurizer, tag = B_VARIANTS[variant]
     split = load_herg_tdc()
-    print("loaded:", split)
+    print(f"loaded ({variant}):", split)
 
-    Xa_tr, Xb_tr, ytr, ktr = _featurize_aligned(split.train_smiles, split.train_y, maxdim)
-    Xa_te, Xb_te, yte, kte = _featurize_aligned(split.test_smiles, split.test_y, maxdim)
+    Xa_tr, Xb_tr, ytr, ktr = _featurize_aligned(split.train_smiles, split.train_y, b_featurizer, maxdim)
+    Xa_te, Xb_te, yte, kte = _featurize_aligned(split.test_smiles, split.test_y, b_featurizer, maxdim)
     print(f"aligned rows: train {ktr.sum()}/{len(ktr)}  test {kte.sum()}/{len(kte)}  "
           f"(test pos={int(yte.sum())})")
     print(f"feature dims: A={Xa_tr.shape[1]}  B={Xb_tr.shape[1]}  AB={Xa_tr.shape[1]+Xb_tr.shape[1]}")
@@ -95,8 +102,9 @@ def run(seed: int = 0, maxdim: int = 1) -> dict:
         "metrics": metrics, "gates": gates,
         "verdict_any_pass": any(g["passes"] for g in gates.values()),
     }
+    result["variant"] = variant
     OUT.mkdir(parents=True, exist_ok=True)
-    path = OUT / "ligand_ph_gate.json"
+    path = OUT / f"{tag}.json"
     path.write_text(json.dumps(result, indent=2))
     print(f"\nsigned result -> {path}")
     print(f"VERDICT: {'PULSE — at least one gate PASSES' if result['verdict_any_pass'] else 'NO PULSE — all gates FAIL on this split'}")
@@ -104,4 +112,5 @@ def run(seed: int = 0, maxdim: int = 1) -> dict:
 
 
 if __name__ == "__main__":
-    run()
+    import sys
+    run(sys.argv[1] if len(sys.argv) > 1 else "vanilla")

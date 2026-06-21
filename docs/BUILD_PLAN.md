@@ -68,10 +68,16 @@ enable the honest **three-way comparison**, because hERG may be ligand-only pred
       Result signed in `docs/gate-result-ligand-ph.md`: **NO PULSE**. B alone AUROC 0.71/MCC 0.26
       (≪ A's 0.84/0.58); A⊕B ≈ A within noise (both CIs straddle 0). Vanilla ligand-only PH adds
       no orthogonal hERG signal. Track C (interface PH) still untested.
+- [x] ESPH variant shipped (`features.element_ph_features`, 7 element channels) + gate re-run.
+      Signed in `docs/gate-result-esph.md`: **PULSE but gate FAILS**. ESPH *alone* (no descriptors,
+      no protein) hits AUROC 0.852 ≥ baseline 0.837 — topology is a competitive *independent*
+      representation (vanilla PH was just the wrong formulation). BUT A⊕ESPH ≈ A (CI straddles 0)
+      and ESPH is worse on MCC → no orthogonal boost, the redundancy thesis. Key caveat: n_test=132
+      is underpowered (AUROC CI ≈ ±0.06); a powered MCC test needs the imbalanced HTS set (TODO).
 - [ ] Three feature tracks on the same TDC split:
       (A) descriptor baseline (Phase 0) ✓,
-      (B) **ligand-only PH** (PH on the drug atom cloud — no protein) ✓ — FAILED gate,
-      (C) **interface bipartite PH** (the full opposition-distance/interface construct) — pending decision.
+      (B) **ligand-only PH** ✓ — vanilla FAILED; ESPH = descriptor-parity standalone, no boost,
+      (C) **interface bipartite PH** (the full opposition-distance/interface construct) — GO/NO-GO.
 - [ ] Structure track needs hERG pocket coordinates: cryo-EM **5VA1/7CN1** + ligand poses
       (dock with the Merck-project Vina path or use a fixed reference pose). Keep the point cloud
       interface-restricted (hundreds of atoms) to stay in the 22 ms regime.
