@@ -1,0 +1,29 @@
+Found local copy...
+[19:45:17] WARNING: not removing hydrogen atom without neighbors
+[19:45:17] WARNING: not removing hydrogen atom without neighbors
+[19:45:17] WARNING: not removing hydrogen atom without neighbors
+[19:45:17] WARNING: not removing hydrogen atom without neighbors
+[19:49:11] WARNING: not removing hydrogen atom without neighbors
+[19:49:11] WARNING: not removing hydrogen atom without neighbors
+[19:49:12] UFFTYPER: Unrecognized atom type: Mn2+2 (0)
+[19:49:59] WARNING: not removing hydrogen atom without neighbors
+[19:49:59] WARNING: not removing hydrogen atom without neighbors
+[19:50:17] UFFTYPER: Unrecognized charge state for atom: 13
+loaded (esph): Split(train=523 [354 pos], test=132 [97 pos])
+aligned rows: train 518/523  test 132/132  (test pos=97)
+feature dims: A=217  B=616  AB=833
+
+PER-TRACK METRICS (TDC hERG scaffold split, aligned rows):
+         track         auroc         auprc           mcc          bacc           acc
+  A_descriptor        0.8367        0.9239        0.5752        0.7730        0.8409
+    B_ligandPH        0.8523        0.9399        0.4682        0.6976        0.8106
+     AB_concat        0.8458        0.9318        0.5224        0.7353        0.8258
+
+GATE (paired bootstrap, PASS iff 95% CI on delta excludes 0):
+   B_ligandPH vs A  [auroc]  [FAIL] auroc: baseline=0.8367 method=0.8523  delta=+0.0156 (95% CI [-0.0411, +0.0723], p(method>baseline)=0.71)
+    AB_concat vs A  [auroc]  [FAIL] auroc: baseline=0.8367 method=0.8458  delta=+0.0091 (95% CI [-0.0178, +0.0347], p(method>baseline)=0.76)
+   B_ligandPH vs A  [mcc]  [FAIL] mcc: baseline=0.5752 method=0.4682  delta=-0.1070 (95% CI [-0.2552, +0.0373], p(method>baseline)=0.07)
+    AB_concat vs A  [mcc]  [FAIL] mcc: baseline=0.5752 method=0.5224  delta=-0.0528 (95% CI [-0.1600, +0.0373], p(method>baseline)=0.12)
+
+signed result -> /root/projects/topologix/benchmarks/results/esph_gate.json
+VERDICT: NO PULSE — all gates FAIL on this split

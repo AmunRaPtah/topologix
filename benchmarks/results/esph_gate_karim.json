@@ -1,0 +1,76 @@
+{
+  "split": "TDC admet_group hERG scaffold",
+  "n_train": 10688,
+  "n_test": 2679,
+  "n_test_pos": 1396,
+  "maxdim": 1,
+  "seed": 0,
+  "feature_dims": {
+    "A": 217,
+    "B": 616
+  },
+  "metrics": {
+    "A_descriptor": {
+      "auroc": 0.8781523091250583,
+      "auprc": 0.8925935701478726,
+      "mcc": 0.588796339091395,
+      "bacc": 0.7945840135606241,
+      "acc": 0.7935796939156402
+    },
+    "B_ligandPH": {
+      "auroc": 0.842578841227692,
+      "auprc": 0.8551293717322811,
+      "mcc": 0.5236520380790572,
+      "bacc": 0.7620040110146571,
+      "acc": 0.7611048898842852
+    },
+    "AB_concat": {
+      "auroc": 0.8787589304258687,
+      "auprc": 0.8930185278199476,
+      "mcc": 0.5843526443432222,
+      "bacc": 0.7924258040454075,
+      "acc": 0.792086599477417
+    }
+  },
+  "gates": {
+    "B_ligandPH_vs_A::auroc": {
+      "passes": false,
+      "delta": -0.03557346789736626,
+      "ci_lo": -0.04634586569158677,
+      "ci_hi": -0.024760438843011802,
+      "baseline": 0.8781523091250583,
+      "method": 0.842578841227692,
+      "p_method_gt_baseline": 0.0
+    },
+    "AB_concat_vs_A::auroc": {
+      "passes": false,
+      "delta": 0.0006066213008104615,
+      "ci_lo": -0.004114814135990294,
+      "ci_hi": 0.005473192033308397,
+      "baseline": 0.8781523091250583,
+      "method": 0.8787589304258687,
+      "p_method_gt_baseline": 0.6005
+    },
+    "B_ligandPH_vs_A::mcc": {
+      "passes": false,
+      "delta": -0.0651443010123377,
+      "ci_lo": -0.09743668796999663,
+      "ci_hi": -0.03394880856033683,
+      "baseline": 0.588796339091395,
+      "method": 0.5236520380790572,
+      "p_method_gt_baseline": 0.0
+    },
+    "AB_concat_vs_A::mcc": {
+      "passes": false,
+      "delta": -0.004443694748172744,
+      "ci_lo": -0.023699950062353835,
+      "ci_hi": 0.015715562316047142,
+      "baseline": 0.588796339091395,
+      "method": 0.5843526443432222,
+      "p_method_gt_baseline": 0.345
+    }
+  },
+  "verdict_any_pass": false,
+  "variant": "esph",
+  "dataset": "karim"
+}
