@@ -1,0 +1,56 @@
+{
+  "task": "absolute dG, held-out target",
+  "n": 370,
+  "n_targets": 15,
+  "rmse": {
+    "null": 1.5493887437788938,
+    "S": 1.8859685348762214,
+    "T": 1.8950623294326725,
+    "TS": 1.9119416793782988
+  },
+  "spearman": {
+    "S": -0.19447229211197023,
+    "T": -0.2784696723464259,
+    "TS": -0.21222573543589446
+  },
+  "gates": {
+    "T_vs_S": {
+      "delta": -0.009093794556451096,
+      "ci_lo": -0.2619621242229713,
+      "ci_hi": 0.28368779058827936,
+      "p_better": 0.4735
+    },
+    "TS_vs_S": {
+      "delta": -0.02597314450207744,
+      "ci_lo": -0.057724303816333734,
+      "ci_hi": 0.004709612090606705,
+      "p_better": 0.0505
+    },
+    "S_vs_null": {
+      "delta": -0.3365797910973276,
+      "ci_lo": -0.5708603539952077,
+      "ci_hi": -0.0867794721960335,
+      "p_better": 0.004
+    },
+    "T_vs_null": {
+      "delta": -0.3456735856537787,
+      "ci_lo": -0.5957577819538123,
+      "ci_hi": -0.09300692925991129,
+      "p_better": 0.004
+    }
+  },
+  "verdict_pass": false,
+  "diagnostic_R": {
+    "task_A_within_target": 0.601605732596882,
+    "task_A_detail": {
+      "rel_topo": 0.38107420603514597,
+      "rel_label": 0.6334284821226802,
+      "median_pair_topo_dist": 135.98247063329407,
+      "median_global_topo_dist": 356.839871289406
+    },
+    "task_B_global": 1.0,
+    "task_B_detail": {
+      "note": "global pool compared against itself; R is 1 by construction"
+    }
+  }
+}

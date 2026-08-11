@@ -13,3 +13,6 @@ benchmarks/data/*.zip
 benchmarks/data/admet_group/
 !benchmarks/data/.gitkeep
 .env
+benchmarks/data/*/
+benchmarks/results/features.pkl
+benchmarks/results/*.npz

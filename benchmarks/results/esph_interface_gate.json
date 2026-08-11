@@ -1,0 +1,49 @@
+{
+  "n": 174,
+  "positives": 59,
+  "groups": 54,
+  "folds": 10,
+  "dims": {
+    "T": 576,
+    "S": 7
+  },
+  "channels": [
+    "ALL|ALL",
+    "ALL|C",
+    "ALL|N",
+    "ALL|O",
+    "('N', 'O')|ALL",
+    "('N', 'O')|('N', 'O')"
+  ],
+  "auroc": {
+    "S_cheap": 0.5822402358142962,
+    "T_esph_interface": 0.4845983787767133,
+    "TS_concat": 0.5170228445099484,
+    "duet_single": 0.5360353721444363
+  },
+  "mcc": {
+    "S_cheap": 0.07436886251657983,
+    "T_esph_interface": 0.00963462118799168,
+    "TS_concat": 0.05052301354678564
+  },
+  "gate_T_vs_S": {
+    "delta": -0.09764185703758288,
+    "ci_lo": -0.20299971860213026,
+    "ci_hi": 0.011516278860028832,
+    "p_T_gt_S": 0.0375,
+    "passes": false
+  },
+  "gate_TS_vs_S": {
+    "delta": -0.06521739130434778,
+    "ci_lo": -0.15962454646665172,
+    "ci_hi": 0.03465334301770678,
+    "p_TS_gt_S": 0.091,
+    "passes": false
+  },
+  "reference": {
+    "track_R_vanilla_interface": 0.425,
+    "simple_features_bar": 0.62,
+    "mcsm_lig_published": 0.7
+  },
+  "verdict_pass": false
+}
