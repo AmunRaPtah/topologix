@@ -37,12 +37,25 @@ diversity of the compared complexes (killed by Experiment 6, which is that regim
 
 ## A note on the motivating result
 
-This project was started on the finding that element-specific PH contributed to winning
-entries in 10 of 26 D3R Grand Challenge tasks. Those wins were **ESPH combined with
-Multiscale Weighted Colored Graphs**, evaluated against 2017-18 baselines, not pure
-persistent homology against modern cheap descriptors. That caveat was recorded in this
-project's own literature review in June 2026 and was not applied to any downstream decision.
-It should have been.
+This project was started on the finding that element-specific PH models ranked first in
+10 of 26 official tasks in **D3R Grand Challenge 3**. Checked against the primary reports
+(Nguyen et al., *J Comput Aided Mol Des* 33(1):71-82, 2019; MathDL, 34(2):131-147, 2020):
+
+- The models **integrate ESPH with multiscale weighted colored graph** features. MathDL
+  mixes further, combining algebraic topology with differential geometry in one model and
+  topology, geometry and algebraic graph in another.
+- **Neither paper reports an ablation isolating the topological block**, so the share of
+  performance attributable to PH alone is not established there.
+- D3R is a blind community challenge: submissions are ranked against **other participants**,
+  not against a fixed panel of published baselines.
+- **Neither paper benchmarks against cheap 2D descriptors** (RDKit descriptor sets, ECFP).
+  The comparison that would establish PH's marginal value over standard cheap practice was
+  not run.
+
+None of that is a criticism of those papers, which make no such claim. It is a caution about
+how the result gets read downstream, including here. A version of the caveat was recorded in
+this project's own literature review in June 2026 and was not applied to any downstream
+decision. It should have been.
 
 ## Layout
 
