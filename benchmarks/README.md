@@ -1,4 +1,7 @@
-# Benchmarks: the six pre-registered gates
+# Benchmarks: the pre-registered gates
+
+Six experiments across four endpoints, plus an encoding sweep that varies the topological
+pipeline itself. Numbering below is the numbering used in the manuscript.
 
 Every experiment here had its decision rule fixed in writing before it ran. Raw output is in
 `results/`, one JSON per gate, unedited. Where a result changed after a correction, both the
@@ -31,18 +34,19 @@ Concatenation scoring *below* the baseline alone is the sharpest available evide
 orthogonal signal exists: a genuinely present but underpowered signal would be expected to
 preserve baseline performance, not reduce it.
 
-## Experiments 4-6: ΔΔG and ΔG on the OpenFE protein-ligand-benchmark
+## Experiments 4-5: ΔΔG and ΔG on the OpenFE protein-ligand-benchmark
 
-Pre-registrations: `preregistrations/exp4-5-ddg.md`, `preregistrations/exp6-contrast.md`.
+Pre-registrations: `preregistrations/exp4-5-ddg.md`, `preregistrations/exp6-contrast.md`
+(the latter filename predates the renumbering; it is Experiment 5's contrast).
 
 | File | Role |
 |---|---|
 | `download.py` | Fetches 15 targets: protein PDB, aligned ligand SDF, experimental values |
 | `esph.py` | ESPH interface featurizer, geometry unchanged from Experiment 3 |
 | `featurize.py` | Per-ligand descriptors (S) and topology (T); 370 ligands, ~50 s |
-| `experiment_ddg_congeneric.py` | Exps 4-5: within-target ΔΔG, 5,084 pairs, held-out target |
-| `experiment_ddg_contrast_heldout.py` | Exp 6 first attempt, held-out target only |
-| `experiment_ddg_contrast.py` | Exp 6 corrected: both split regimes on identical rows |
+| `experiment_ddg_congeneric.py` | Exp 4: within-target ΔΔG, 5,084 pairs, held-out target |
+| `experiment_ddg_contrast_heldout.py` | Exp 5 first attempt, held-out target only |
+| `experiment_ddg_contrast.py` | Exp 5 corrected: both split regimes on identical rows |
 
 Results: `ddg_congeneric_gate.json`, `ddg_contrast_heldout.json`,
 `ddg_contrast_bothsplits.json`.
@@ -50,18 +54,18 @@ Results: `ddg_congeneric_gate.json`, `ddg_contrast_heldout.json`,
 **The geometry in `esph.py` is carried over from Experiment 3 unchanged** (8 Å interface
 cut, 16 Å filtration cap, fixed-range persistence imager with its range fixed before
 fitting, six element-pair channels). This is deliberate: only the endpoint changes between
-Experiment 3 and Experiments 4-6, so a different outcome could not be attributed to a
+Experiment 3 and Experiments 4-5, so a different outcome could not be attributed to a
 re-tuned featurizer.
 
 ### Two corrections made in the open
 
-**The resampling unit (Exps 4-5).** The pre-registration said "paired bootstrap over
+**The resampling unit (Exp 4).** The pre-registration said "paired bootstrap over
 held-out predictions" without naming the unit. Pairs within a target share a protein and a
 congeneric series and are not independent. Both bootstraps are computed and reported; the
 cluster version was declared governing in the script docstring before the run. Read
 literally, the pre-registration would have passed this gate on a +0.009 kcal/mol effect.
 
-**The control regime (Exp 6).** The first version of the contrast used a held-out-target
+**The control regime (Exp 5).** The first version of the contrast used a held-out-target
 split throughout, out of caution about grouping structure. That made it strictly harder than
 the D3R/PDBbind regime whose published result motivated the whole hypothesis, and every
 feature block fell below a constant predictor with negative rank correlation. When the
