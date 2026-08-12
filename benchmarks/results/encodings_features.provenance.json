@@ -1,0 +1,24 @@
+{
+  "block_dims": {
+    "A": 217,
+    "L": 420,
+    "S": 672,
+    "V": 224,
+    "X": 224
+  },
+  "platform": "Linux-6.8.0-134-generic-x86_64-with-glibc2.39",
+  "python": "3.12.3",
+  "rdkit_descriptor_count": 217,
+  "source": "/root/topologix/repo/benchmarks/data/herg_karim.tab",
+  "source_sha256": "b47cbff0d65bbb5c6ade5ecd4c5bab20158c6cbf631a68f355efbe7e5fafc099",
+  "versions": {
+    "gudhi": "3.13.0",
+    "numpy": "1.26.4",
+    "persim": "0.3.8",
+    "rdkit": "2026.03.5",
+    "ripser": "0.6.15",
+    "scipy": "1.17.1",
+    "sklearn": "1.2.2",
+    "xgboost": "3.4.0"
+  }
+}

@@ -116,3 +116,22 @@ the pre-registration or the gate would have caught it. rdkit was restored and fe
 re-run, after which it reproduced the first run exactly at 13,434 kept / 11 dropped. The
 lesson is to record library versions and feature-block dimensions alongside any cached
 feature matrix and to treat a dimension change between runs as an error, not a curiosity.
+
+## Provenance guard
+
+`provenance.py`, covered by `tests/test_provenance.py`, is the response to that near-miss,
+and it is enforcement rather than documentation.
+
+Every cached feature matrix carries a sidecar (`<name>.provenance.json`) recording library
+versions, per-block dimensions, the live rdkit descriptor count, and a SHA-256 of the source
+data. `featurize*.py` writes it; both gates call `assert_compatible` before loading and
+refuse to run otherwise. Three things fail loudly: a change in any block dimension, a change
+in the rdkit version, a change in the source data hash. A **missing** sidecar also fails,
+because an unprovenanced matrix cannot be shown comparable and "probably fine" is the exact
+reasoning this module exists to stop. Differences outside that blocking set, a numpy patch
+bump for instance, are recorded but do not block.
+
+The second test in `tests/test_provenance.py` reconstructs the real incident: two sidecars
+differing only by rdkit 2026.03.5 / 2023.09.6 and descriptor block 217 / 210. It asserts the
+guard fires. Deposited sidecars for the matrices behind Experiments 4-6 are in
+`results/*.provenance.json`.

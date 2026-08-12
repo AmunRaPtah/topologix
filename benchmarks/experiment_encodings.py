@@ -16,6 +16,7 @@ import json
 import pickle
 
 import numpy as np
+import provenance
 from scipy.stats import norm
 from sklearn.metrics import matthews_corrcoef, roc_auc_score
 from xgboost import XGBClassifier
@@ -31,7 +32,13 @@ FAMILY = [("X", False), ("X", True), ("L", False), ("L", True),
           ("S", False), ("S", True), ("U", False), ("U", True)]
 
 
+def _check_provenance():
+    """Fail loudly rather than silently compare matrices from different environments."""
+    provenance.assert_compatible("results/features.pkl")
+
+
 def load():
+    _check_provenance()
     d = pickle.load(open("results/features.pkl", "rb"))
     rows = d["rows"]
     y = np.array([r["y"] for r in rows])

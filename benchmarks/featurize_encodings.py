@@ -6,6 +6,7 @@ from rdkit import Chem, RDLogger; RDLogger.DisableLog('rdApp.*')
 from rdkit.Chem import AllChem, Descriptors
 from rdkit.Chem.Scaffolds import MurckoScaffold
 import encodings_alt as E
+import provenance
 
 warnings.filterwarnings("ignore")
 DESC = Descriptors._descList
@@ -58,6 +59,9 @@ def main():
     with open("results/features.pkl", "wb") as fh:
         pickle.dump({"rows": rows, "dropped": dropped,
                      "dims": {k: len(rows[0][k]) for k in ("A","V","X","L","S")}}, fh)
+    dims = {k: len(rows[0][k]) for k in ("A", "V", "X", "L", "S")}
+    sc = provenance.write_sidecar("results/features.pkl", block_dims=dims, source=SRC)
+    print(f"provenance -> {sc}", flush=True)
     print(f"\nkept {len(rows)}/{len(args)} | dropped {dropped} | "
           f"dims { {k: len(rows[0][k]) for k in ('A','V','X','L','S')} } | "
           f"{(time.time()-t0)/60:.1f} min", flush=True)

@@ -6,7 +6,8 @@ every feature block. Decision rule, family, Holm-Bonferroni correction, cluster-
 rule and validity precondition are unchanged from PREREGISTRATION.md. See Addendum 2.
 """
 import json, pickle
-import numpy as np, pandas as pd
+import numpy as np
+import provenance, pandas as pd
 from sklearn.metrics import matthews_corrcoef, roc_auc_score
 from xgboost import XGBClassifier
 from experiment_encodings import boot_delta, holm, FAMILY, EXP2_BASELINE_AUROC, PRECONDITION_TOL, SEED
@@ -22,7 +23,13 @@ def fit_predict(X, y, tr, te):
     m.fit(X[tr], y[tr])
     return m.predict_proba(X[te])[:, 1]
 
+def _check_provenance():
+    """Fail loudly rather than silently compare matrices from different environments."""
+    provenance.assert_compatible("results/features.pkl")
+
+
 def main():
+    _check_provenance()
     d = pickle.load(open("results/features.pkl", "rb"))
     rows = d["rows"]
     # Source indices recovered by align.py (deterministic re-run of the embedding decision,
@@ -105,4 +112,6 @@ def main():
     print(f"\n  control V: AUROC {scores['V']['auroc']:.4f}")
     print(f"  VERDICT_PASS = {out['verdict_pass']}")
 
-main()
+
+if __name__ == "__main__":
+    main()
