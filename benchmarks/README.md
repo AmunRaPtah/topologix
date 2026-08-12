@@ -71,3 +71,44 @@ comparator collapses, the run says nothing about the marginal value of anything.
 
 Neither correction rescued the hypothesis. Both are documented because the discipline is the
 point of this repository.
+
+## Experiment 6: is the negative specific to Vietoris-Rips persistence images?
+
+Pre-registration: `preregistrations/exp7-encodings.md`, including two addenda logged before
+any score was seen.
+
+| File | Role |
+|---|---|
+| `encodings_alt.py` | Four encoders varying filtration, vectorization and algebraic object |
+| `featurize_encodings.py` | 3D conformers + descriptors + all four encodings, 13,434 molecules |
+| `experiment_encodings.py` | Gate: 8 comparisons, Holm-Bonferroni, scaffold cluster bootstrap |
+| `experiment_encodings_official.py` | Confirmatory rerun on TDC's split and Experiment 2's hyperparameters |
+| `align_indices.py` | Recovers source-index alignment for the cached feature matrix |
+| `results/encodings_gate_ownsplit.json` | First run. Precondition FAILED, see below |
+| `results/encodings_gate_official.json` | **The result to cite.** Precondition passes |
+
+**Cite the official-split run, not the first one.** The first run used a deterministic
+largest-scaffold-group-first split, which pushed every singleton scaffold into test (2,687
+scaffolds for 2,687 molecules) and made the descriptor baseline land at 0.8311 against
+Experiment 2's 0.8781, outside the pre-registered ±0.03 tolerance. It also made the scaffold
+cluster bootstrap degenerate into a row bootstrap, so a safeguard that is stated in the
+method did nothing. Both runs are kept; the first is a valid within-split comparison and an
+invalid cross-experiment one.
+
+The confirmatory run uses TDC's own `create_scaffold_split` and the hyperparameters from
+`baseline.py`. Baseline 0.8858 vs 0.8781, test positive rate 0.522 vs 0.521, 1,796 scaffolds
+across 2,688 test molecules, so the cluster bootstrap is meaningful.
+
+**What moved between the two runs.** `A+S` was +0.0050 on the first split, the only block
+nominally above baseline, and is +0.0003 with CI [−0.0047, +0.0051] on the correct one. An
+apparent effect that exists only under a mis-specified split is the same failure mode as the
+ESPH pulse in Experiment 2, caught here before it was reported rather than after.
+
+**A dependency changed the feature space mid-experiment.** Installing PyTDC to fetch the
+official split silently downgraded rdkit, changing `Descriptors._descList` from 217 entries
+to 210. Experiment 2 used 217. Had the confirmation run on 210 it would have compared a
+different baseline while appearing to satisfy its own validity precondition, and nothing in
+the pre-registration or the gate would have caught it. rdkit was restored and featurization
+re-run, after which it reproduced the first run exactly at 13,434 kept / 11 dropped. The
+lesson is to record library versions and feature-block dimensions alongside any cached
+feature matrix and to treat a dimension change between runs as an error, not a curiosity.

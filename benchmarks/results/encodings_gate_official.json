@@ -1,0 +1,218 @@
+{
+  "split": "TDC create_scaffold_split seed=42 frac=[0.7,0.1,0.2], train+valid merged",
+  "hyperparameters": "Experiment 2 baseline.py verbatim",
+  "n": 13434,
+  "n_train": 10746,
+  "n_test": 2688,
+  "n_test_scaffolds": 1796,
+  "scores": {
+    "A": {
+      "auroc": 0.8857752643967849,
+      "mcc": 0.6190054198112335,
+      "dim": 217
+    },
+    "V": {
+      "auroc": 0.8140051537128696,
+      "mcc": 0.4680658547963387,
+      "dim": 224
+    },
+    "X": {
+      "auroc": 0.811554755148721,
+      "mcc": 0.45376386425639326,
+      "dim": 224
+    },
+    "L": {
+      "auroc": 0.7866991278844042,
+      "mcc": 0.4067111981496206,
+      "dim": 420
+    },
+    "S": {
+      "auroc": 0.8531485791238023,
+      "mcc": 0.5363491186842424,
+      "dim": 672
+    },
+    "U": {
+      "auroc": 0.8511748934536975,
+      "mcc": 0.5276129219226737,
+      "dim": 1316
+    },
+    "A+X": {
+      "auroc": 0.8844640959482456,
+      "mcc": 0.6113378119310072,
+      "dim": 441
+    },
+    "A+L": {
+      "auroc": 0.8817641094814562,
+      "mcc": 0.60056164399944,
+      "dim": 637
+    },
+    "A+S": {
+      "auroc": 0.886058685326228,
+      "mcc": 0.6064873737998658,
+      "dim": 889
+    },
+    "A+U": {
+      "auroc": 0.8842350297175996,
+      "mcc": 0.6079768830286997,
+      "dim": 1533
+    }
+  },
+  "precondition_ok": true,
+  "family": [
+    "X_vs_A",
+    "A+X_vs_A",
+    "L_vs_A",
+    "A+L_vs_A",
+    "S_vs_A",
+    "A+S_vs_A",
+    "U_vs_A",
+    "A+U_vs_A"
+  ],
+  "results": {
+    "X_vs_A": {
+      "cluster": {
+        "delta": -0.07422050924806389,
+        "ci_lo": -0.08719624094384555,
+        "ci_hi": -0.06236698269052762,
+        "p_one_sided": 1.0
+      },
+      "row": {
+        "delta": -0.07422050924806389,
+        "ci_lo": -0.08606410561378679,
+        "ci_hi": -0.06307331891655649,
+        "p_one_sided": 1.0
+      },
+      "uncorrected_pass_cluster": false,
+      "holm_level": 0.0,
+      "p_one_sided_cluster": 1.0,
+      "PASS": false
+    },
+    "A+X_vs_A": {
+      "cluster": {
+        "delta": -0.0013111684485392905,
+        "ci_lo": -0.005243182984543718,
+        "ci_hi": 0.0023485180388081684,
+        "p_one_sided": 0.757
+      },
+      "row": {
+        "delta": -0.0013111684485392905,
+        "ci_lo": -0.005132134092960086,
+        "ci_hi": 0.0021924869860214676,
+        "p_one_sided": 0.772
+      },
+      "uncorrected_pass_cluster": false,
+      "holm_level": 0.0,
+      "p_one_sided_cluster": 0.757,
+      "PASS": false
+    },
+    "L_vs_A": {
+      "cluster": {
+        "delta": -0.09907613651238067,
+        "ci_lo": -0.11534807044234048,
+        "ci_hi": -0.08351185465091465,
+        "p_one_sided": 1.0
+      },
+      "row": {
+        "delta": -0.09907613651238067,
+        "ci_lo": -0.11287505688600488,
+        "ci_hi": -0.08556086164918172,
+        "p_one_sided": 1.0
+      },
+      "uncorrected_pass_cluster": false,
+      "holm_level": 0.0,
+      "p_one_sided_cluster": 1.0,
+      "PASS": false
+    },
+    "A+L_vs_A": {
+      "cluster": {
+        "delta": -0.004011154915328663,
+        "ci_lo": -0.008040444902642104,
+        "ci_hi": -0.00010447404395110964,
+        "p_one_sided": 0.9765
+      },
+      "row": {
+        "delta": -0.004011154915328663,
+        "ci_lo": -0.007920677838689463,
+        "ci_hi": -0.0003723369270767357,
+        "p_one_sided": 0.984
+      },
+      "uncorrected_pass_cluster": false,
+      "holm_level": 0.0,
+      "p_one_sided_cluster": 0.9765,
+      "PASS": false
+    },
+    "S_vs_A": {
+      "cluster": {
+        "delta": -0.032626685272982625,
+        "ci_lo": -0.04298993386249304,
+        "ci_hi": -0.022642913604049568,
+        "p_one_sided": 1.0
+      },
+      "row": {
+        "delta": -0.032626685272982625,
+        "ci_lo": -0.04245991380753361,
+        "ci_hi": -0.023543837541533327,
+        "p_one_sided": 1.0
+      },
+      "uncorrected_pass_cluster": false,
+      "holm_level": 0.0,
+      "p_one_sided_cluster": 1.0,
+      "PASS": false
+    },
+    "A+S_vs_A": {
+      "cluster": {
+        "delta": 0.00028342092944311226,
+        "ci_lo": -0.004746887159360285,
+        "ci_hi": 0.005136434418768451,
+        "p_one_sided": 0.4615
+      },
+      "row": {
+        "delta": 0.00028342092944311226,
+        "ci_lo": -0.004721808320069515,
+        "ci_hi": 0.004870794733537474,
+        "p_one_sided": 0.4625
+      },
+      "uncorrected_pass_cluster": false,
+      "holm_level": 0.00625,
+      "p_one_sided_cluster": 0.4615,
+      "PASS": false
+    },
+    "U_vs_A": {
+      "cluster": {
+        "delta": -0.03460037094308743,
+        "ci_lo": -0.04487303844511256,
+        "ci_hi": -0.02523000487358002,
+        "p_one_sided": 1.0
+      },
+      "row": {
+        "delta": -0.03460037094308743,
+        "ci_lo": -0.043905659564188786,
+        "ci_hi": -0.025336525789119657,
+        "p_one_sided": 1.0
+      },
+      "uncorrected_pass_cluster": false,
+      "holm_level": 0.0,
+      "p_one_sided_cluster": 1.0,
+      "PASS": false
+    },
+    "A+U_vs_A": {
+      "cluster": {
+        "delta": -0.0015402346791852928,
+        "ci_lo": -0.007223334978420828,
+        "ci_hi": 0.004069166426699746,
+        "p_one_sided": 0.7025
+      },
+      "row": {
+        "delta": -0.0015402346791852928,
+        "ci_lo": -0.0070791069519641455,
+        "ci_hi": 0.003520946540898461,
+        "p_one_sided": 0.7295
+      },
+      "uncorrected_pass_cluster": false,
+      "holm_level": 0.0,
+      "p_one_sided_cluster": 0.7025,
+      "PASS": false
+    }
+  },
+  "verdict_pass": false
+}

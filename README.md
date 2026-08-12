@@ -13,7 +13,9 @@ negative result. Nothing here should be read as a working screening product.
 The gate, fixed before any experiment ran, was: *IPC-derived features must beat an
 RDKit-descriptor baseline on a held-out split. If they do not, the core formulation is
 wrong and the chain halts at validation.* Six experiments across four endpoints and two
-split regimes all failed it.
+split regimes all failed it, and so did a sweep over four different topological encodings.
+
+**Four endpoints.**
 
 | # | Endpoint | Split | Topology vs cheap baseline | Gate |
 |---|---|---|---|---|
@@ -23,17 +25,36 @@ split regimes all failed it.
 | 3 | Drug resistance, ESPH bipartite interface | GroupKFold, protein | 0.485 vs 0.582; T+S 0.517 | FAIL |
 | 4 | Congeneric ΔΔG | GroupKFold, target | RMSE 1.550 vs 1.399 | FAIL |
 | 5 | Congeneric ΔΔG, concatenation | GroupKFold, target | +0.009 kcal/mol, CI straddles 0 | FAIL |
-| 6 | Absolute ΔG | random 5-fold | RMSE 1.094 vs 0.960; T+S adds +0.003 | FAIL |
+| 5b | Absolute ΔG | random 5-fold | RMSE 1.094 vs 0.960; T+S adds +0.003 | FAIL |
 
-Experiment 6 is the informative one. In the regime where the baseline works, topology alone
+Experiment 5b is the informative one. In the regime where the baseline works, topology alone
 reaches Spearman **ρ = +0.690** and beats a constant predictor by 27%. **The features carry
 real signal and the implementation is sound.** That signal is simply a subset of what cheap
 2D descriptors already provide, in every regime tested.
 
+**Four encodings, across three axes (Experiment 6).** The obvious objection to the above is
+that it tests one pipeline: Vietoris-Rips filtration, homology, persistence images. So the
+filtration, the vectorization and the algebraic object were each varied, on the full 13,434
+molecule hERG set, TDC's own scaffold split, and Experiment 2's own hyperparameters. Eight
+comparisons, Holm-Bonferroni corrected, cluster-bootstrapped over scaffolds.
+
+| Block | Axis varied | Alone | With descriptors (A = 0.8858) |
+|---|---|---|---|
+| V (control) | none | 0.8140 | n/a |
+| X alpha complex | filtration | 0.8116 | 0.8845 (−0.0013) |
+| L persistence landscapes | vectorization | 0.7867 | 0.8818 (**−0.0040**) |
+| S persistent Laplacian, L0 | algebraic object | **0.8531** | 0.8861 (+0.0003) |
+| U union of X, L, S | all three | 0.8512 | 0.8842 (−0.0015) |
+
+All eight fail; none excludes zero even before the multiplicity correction. `A+L` is
+significantly *below* the descriptor baseline. The persistent Laplacian is by a clear margin
+the best topological encoding tried anywhere in this repository, which says the non-harmonic
+spectrum homology discards carries more than homology does, and it still adds nothing.
+
 Two candidate boundary conditions were proposed and both were then falsified by experiment
 rather than argued away: that the boundary is endpoint continuity (killed by Experiments 4
 and 5, where ΔΔG is continuous and topology still failed), and that it is structural
-diversity of the compared complexes (killed by Experiment 6, which is that regime).
+diversity of the compared complexes (killed by Experiment 5b, which is that regime).
 
 ## A note on the motivating result
 

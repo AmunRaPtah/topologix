@@ -16,3 +16,4 @@ benchmarks/data/admet_group/
 benchmarks/data/*/
 benchmarks/results/features.pkl
 benchmarks/results/*.npz
+benchmarks/results/*.pkl
