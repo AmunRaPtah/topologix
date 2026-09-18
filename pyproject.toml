@@ -6,6 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "topologix"
 version = "0.0.1"
 description = "TDA-based drug-protein interaction screening"
+license = { text = "MIT" }
 requires-python = ">=3.11"
 dependencies = [
     "numpy>=1.26",
